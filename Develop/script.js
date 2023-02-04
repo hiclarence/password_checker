@@ -60,24 +60,68 @@ function checkLength () {
   } else return passwordLength;
 }
 
-function makeid(length, [lower,upper,number,characters]) {
+function makeid(length, [lower,upper,number,symbol]) {
   let result = '';
   const lowerCase = 'abcdefghijklmnopqrstuvwxyz';
   const upperCase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
   const numbers = '0123456789';
   const symbols = '!@#$=%^&*?'
-  for (let i = 0; i < length; i++) {
-    
+  if (lower==true) {
+    result = result.concat(lowerCase);
+  }
+  if (upper==true) {
+    result = result.concat(upperCase);
+  }
+  if (number==true) {
+    result = result.concat(numbers);
+  }
+  if (symbol==true) {
+    result = result.concat(symbols);
   }
 
-  // const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  const charactersLength = characters.length;
+  const resultLength = result.length;
   let counter = 0;
+  let final = ''
   while (counter < length) {
-    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    final += result.charAt(Math.floor(Math.random() * resultLength));
     counter += 1;
   }
-  return result;
+
+  lowerCaseArray = lowerCase.split("");
+  upperCaseArray = upperCase.split("");
+  numbersArray = numbers.split("");
+  symbolsArray = symbols.split("");
+
+  count = 0;
+  if (lower==true) {
+    for (let i = 0; i < lowerCaseArray.length; i++) {
+      if (final.includes(lowerCaseArray[i])==true) {
+        count =+ 1;
+      }  
+      }
+  }
+
+  if (number==true) {
+    for (let i = 0; i < numbersArray.length; i++) {
+      if (final.includes(numbersArray[i])==true) {
+        count =+ 1;
+      }  
+      }
+  }  
+
+  if (symbol==true) {
+    for (let i = 0; i < symbolsArray.length; i++) {
+      if (final.includes(symbolsArray[i])==true) {
+        count =+ 1;
+      }  
+      }
+  }
+
+  if (count == 0) {
+    makeid(length, [lower,upper,number,symbol]);
+  }
+  
+  return final;
 }
 
 
